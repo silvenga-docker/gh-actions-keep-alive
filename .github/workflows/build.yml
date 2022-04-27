@@ -1,0 +1,37 @@
+name: "Build"
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  schedule:
+    # Random time each week.
+    - cron:  '32 3 * * 2'
+
+jobs:
+  remote-keep-alive:
+    strategy:
+      matrix:
+        workflow:
+          - id: build.yml
+            repo: tor
+    runs-on: ubuntu-latest
+    steps:
+    - name: Ensure Workflow is Enabled
+      env:
+        OWNER: silvenga-docker
+      run: |
+        echo "Ensuring repo '${{ matrix.workflow.repo }}' is enabled."
+        curl -X PUT -H "Authorization: token ${{ secrets.GH_TOKEN }}" "https://api.github.com/repos/$OWNER/${{ matrix.workflow.repo }}/actions/workflows/${{ matrix.workflow.id }}/enable"
+        echo "Finished"
+  self-keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gautamkrishnar/keepalive-workflow@master
+        name: Ensure Workflow is Kept Alive
+        with:
+          committer_username: "silvenga-docker"
+          committer_email: "m+silvenga-docker@silvenga.com"
+          commit_message: "Automated commit by Keep Alive Workflow to keep this repository active."
+          time_elapsed: 30
