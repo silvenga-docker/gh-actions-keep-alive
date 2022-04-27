@@ -21,9 +21,8 @@ jobs:
       env:
         OWNER: silvenga-docker
       run: |
-        echo "Ensuring repo '${{ matrix.workflow.repo }}' is enabled."
-        curl -X PUT -H "Authorization: token ${{ secrets.GH_TOKEN }}" "https://api.github.com/repos/$OWNER/${{ matrix.workflow.repo }}/actions/workflows/${{ matrix.workflow.id }}/enable"
-        echo "Finished"
+        set -ex
+        curl --fail -i -X PUT -H "Authorization: token ${{ secrets.GH_TOKEN }}" "https://api.github.com/repos/$OWNER/${{ matrix.workflow.repo }}/actions/workflows/${{ matrix.workflow.id }}/enable"
   self-keep-alive:
     runs-on: ubuntu-latest
     steps:
