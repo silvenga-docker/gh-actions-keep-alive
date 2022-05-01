@@ -15,6 +15,8 @@ jobs:
         workflow:
           - id: build.yml
             repo: tor
+          - id: build.yaml
+            repo: actual-server
     runs-on: ubuntu-latest
     steps:
     - name: Ensure Workflow is Enabled
