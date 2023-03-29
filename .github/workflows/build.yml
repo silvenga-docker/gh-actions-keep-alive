@@ -17,6 +17,8 @@ jobs:
             repo: tor
           - id: build.yaml
             repo: actual-server
+          - id: build.yml
+            repo: deluge
     runs-on: ubuntu-latest
     steps:
     - name: Ensure Workflow is Enabled
