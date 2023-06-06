@@ -23,6 +23,8 @@ jobs:
             repo: static-hoster
           - id: build.yaml
             repo: passthrough-backend
+          - id: build.yaml
+            repo: varnish
     runs-on: ubuntu-latest
     steps:
     - name: Ensure Workflow is Enabled
