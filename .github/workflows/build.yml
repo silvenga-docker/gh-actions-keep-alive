@@ -19,6 +19,10 @@ jobs:
             repo: actual-server
           - id: build.yml
             repo: deluge
+          - id: build.yaml
+            repo: static-hoster
+          - id: build.yaml
+            repo: passthrough-backend
     runs-on: ubuntu-latest
     steps:
     - name: Ensure Workflow is Enabled
