@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
 name: "Build"
 on:
   workflow_dispatch:
@@ -25,6 +27,8 @@ jobs:
             repo: passthrough-backend
           - id: build.yaml
             repo: varnish
+          - id: build.yaml
+            repo: redlib
     runs-on: ubuntu-latest
     steps:
     - name: Ensure Workflow is Enabled
@@ -32,7 +36,12 @@ jobs:
         OWNER: silvenga-docker
       run: |
         set -ex
-        curl --fail -i -X PUT -H "Authorization: token ${{ secrets.GH_TOKEN }}" "https://api.github.com/repos/$OWNER/${{ matrix.workflow.repo }}/actions/workflows/${{ matrix.workflow.id }}/enable"
+        curl \
+          --fail \
+          -i \
+          -X PUT \
+          -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+          "https://api.github.com/repos/$OWNER/${{ matrix.workflow.repo }}/actions/workflows/${{ matrix.workflow.id }}/enable"
   self-keep-alive:
     runs-on: ubuntu-latest
     steps:
